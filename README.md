@@ -1,7 +1,7 @@
 PlutoThesis
 ===========
 
-# 哈工大学位论文LaTeX模板
+# 哈工大本科毕业设计（论文）LaTeX模板
 
 # 2014年版
 
@@ -11,7 +11,7 @@ PlutoThesis
 
 ---
 
-该模板支持**XeLaTeX**的分支，请参见[XeLaTeX分支](https://github.com/magic282/PlutoThesis/tree/xelatex)。
+该模板支持**XeLaTeX**的分支，请参见[XeLaTeX分支](https://github.com/PlutoThesis/PlutoThesis-Bachelor/tree/xelatex)。
 
 ---
 
@@ -21,11 +21,10 @@ PlutoThesis
 
 ---
 
-请使用**PDFLaTeX**编译。具体使用方法请见[main.pdf](https://github.com/magic282/PlutoThesis/blob/master/main.pdf)。
+请使用**PDFLaTeX**编译。具体使用方法请见[main.pdf](https://github.com/PlutoThesis/PlutoThesis-Bachelor/blob/master/main.pdf)。
 
 ---
 
-这是因为作者觉得本科毕设用Word排版很蛋疼，于是在著名的PlutoThesis硕博模板上修改而成的，所以**完全兼容硕博**的格式。。。
 
 现在已知**本科毕设**模板部分存在几个问题：
 
