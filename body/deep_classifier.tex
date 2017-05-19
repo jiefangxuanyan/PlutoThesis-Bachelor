@@ -1,0 +1,36 @@
+\BiChapter{深度学习的二分类方法}{Undetermined English title!}
+\BiSection{原理介绍}{Undetermined English title!}
+为了更清晰的介绍深度学习的二分类方法，本文将先给出一些形式化的定义。
+
+在深度学习的二分类方法中使用的语料库$\mathcal{C}$是一个句子的多重集合，其中每一个句子是一个词语的序列，即：
+\begin{equation}
+\mathcal{C} \subset \mathcal{V}^+
+\end{equation}
+其中$\mathcal{V}$是所有词语的集合。
+
+替换函数$f_\text{r}$可以将一个句子$s \in \mathcal{C}$中的某个词语$s_i$替换为一个不同的词语$v \ne s_i$，即：
+\begin{equation}
+f_\text{r}(s, i, v) = (s_1, \dots, s_{i - 1}, v, s_{i + 1}, \dots, s_{|s|})
+\end{equation}
+对语料库中的句子应用替换函数$f_\text{r}$得到的句子称为替换句：
+\begin{equation}
+\mathcal{C}_\text{r} = \bigl\{f_\text{r}(s, i, v) \bigm| s \in \mathcal{C}, v \in \mathcal{V}\bigr\}
+\end{equation}
+一般来说，$\mathcal{C}_\text{r} \cap \mathcal{C} \approx \emptyset$。本课题希望得到一个二分类器$M_\mathcal{C}$，满足：
+\begin{equation}
+M_\mathcal{C}(s) = 
+\begin{cases}
+1 & s \in \mathcal{C}, \\
+0 & s \in \mathcal{C}_\text{r}
+\end{cases}
+\end{equation}
+使得$M$可以区分原句与替换句。
+
+利用这样的二分类器，我们就可以定义词语对$(v_\text{a}, v_\text{b})$的相似度：
+\begin{equation}
+\similarity(w_\text{a}, w_\text{b}) = E\Bigl(M_\mathcal{C}\bigl(f_\text{r}(s, i, v_\text{b})\bigr) \Bigm| s \in \mathcal{C}, s_i = v_\text{a}\Bigr)
+\end{equation}
+其中$E$为数学期望。其中的思想是，利用包含词语$v_\text{a}$的句子以$v_\text{b}$替换得到的替换句测试二分类器$M_\mathcal{C}$，若二分类器容易将这样的替换句误判为原句，则说明词语对$(v_\text{a}, v_\text{b})$相似。为了提高准确性，应同时考虑从$v_\text{a}$到$v_\text{b}$和从$v_\text{b}$到$v_\text{a}$的替换。
+
+\BiSubsection{训练数据生成}{Undetermined English title!}
+为了生成训练数据，需要用到语料$\mathcal{C}$。语料是一个句子的多重集合，其中每个句子是一个词语的序列。其满足：

@@ -13,6 +13,9 @@
 
 \graphicspath{{figures/}} %定义所有的eps文件在 figures 子目录下
 
+%个人自定义的符号
+\DeclareMathOperator{\similarity}{sim}
+
 \begin{document}
 
 \input{setup/Definition} % 文本格式定义
@@ -49,6 +52,7 @@
 
 \mainmatter\defaultfont\sloppy\raggedbottom
 
+\include{body/deep_classifier}
 \include{body/introduction}
 \include{body/figures}
 \include{body/tables}
