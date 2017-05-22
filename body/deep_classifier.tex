@@ -1,5 +1,7 @@
-\BiChapter{深度学习的二分类方法}{Undetermined English title!}
-\BiSection{原理介绍}{Undetermined English title!}
+% !Mode:: "TeX:UTF-8"
+
+\BiChapter{深度学习的二分类方法}{}
+\BiSection{原理介绍}{}
 为了更清晰的介绍深度学习的二分类方法，本文将先给出一些形式化的定义。
 
 在深度学习的二分类方法中使用的语料库$\mathcal{C}$是一个句子的多重集合，其中每一个句子是一个词语的序列，即：
@@ -32,5 +34,24 @@ M_\mathcal{C}(s) =
 \end{equation}
 其中$E$为数学期望。其中的思想是，利用包含词语$v_\text{a}$的句子以$v_\text{b}$替换得到的替换句测试二分类器$M_\mathcal{C}$，若二分类器容易将这样的替换句误判为原句，则说明词语对$(v_\text{a}, v_\text{b})$相似。为了提高准确性，应同时考虑从$v_\text{a}$到$v_\text{b}$和从$v_\text{b}$到$v_\text{a}$的替换。
 
-\BiSubsection{训练数据生成}{Undetermined English title!}
-为了生成训练数据，需要用到语料$\mathcal{C}$。语料是一个句子的多重集合，其中每个句子是一个词语的序列。其满足：
+\BiSubsection{训练数据生成}{}
+为了训练二分类器$M_\mathcal{C}$，我们需要一些带有标注的句子$(x, y) \in \mathcal{V}^+ \times {0, 1}$作为训练数据。其中：
+\begin{equation}
+	y = 
+	\begin{cases}
+		1 & x \in \mathcal{C}, \\
+		0 & x \in \mathcal{C}_\text{r}
+	\end{cases}
+\end{equation}
+其中，原句是非常容易生成的，只需将$M_\mathcal{C}$中全部的句子标注为$1$即可。而替换句的生成需要一些额外的步骤。
+
+利用随机采样的方法，我们可以生成一些采样句。采样句定义如下：
+\begin{equation}
+\mathcal{C}_\text{s} = \Bigl\{f_\text{r}(s, i, v) \Bigm| s \in \mathcal{C}, i \sim \mathcal{U}\bigl\{1, |s|\bigr\}, v \sim \mathcal{D}_\mathcal{V}\Bigr\}
+\end{equation}
+其中$\mathcal{U}$为均匀分布，$\mathcal{D}_\mathcal{V}$为词语在自然语言中出现的概率分布。也就是说，采样句中的被替换词语位置$i$是随机选择的，而替换词语$v$亦是从词语分布中采样得到的。
+
+显然，$\mathcal{C}_\text{s} \subset \mathcal{C}_\text{r}$，而随机采样对于计算机来说是轻而易举的任务。这样，我们就可以通过生成采样句的方式获得用于训练的替换句。
+
+\BiSubsection{深度学习模型}{}
+上文提到，本课题需要训练一个二分类器$M_\mathcal{C}$用于区分原句和替换句。本课题使用了深度学习的模型来完成此任务。
