@@ -1,3 +1,82 @@
 % !Mode:: "TeX:UTF-8"
 
 \BiChapter{深度学习辅助词嵌入方法}{}
+词嵌入是一种将词语映射为实数向量的技术，这种技术是词语相似度计算中的常用技术。因为相比于词语，向量的相似度比较是非常容易的，通过余弦相似度和欧氏距离等方法都可以轻而易举的计算向量的相似度。本章将会介绍一种词嵌入的训练方法，并利用这种方法得到的词嵌入结果计算词语相似度。
+
+词嵌入的训练方法分为直接训练和间接训练。直接训练利用语料库中的统计规律进行训练，最终以得到词嵌入结果为目的；而间接训练则将词嵌入的结果作为其他任务的输入，并将词嵌入矩阵作为模型参数与其他任务的模型共同训练。对于直接训练而言，现在已经有多种成熟的技术，例如NNLM\citeup{Bengio2003}、LBL\citeup{Mnih2007}、C\&W\citeup{Collobert2008}、CBOW\citeup{Mikolov2013}、Skip-gram\citeup{Mikolov2013}与GloVe\citeup{Pennington2014}。而间接训练则多用于深度学习这类基于梯度下降的学习方法中，在第\ref{s:classifer rnn}小节中，本课题就使用了一种间接训练的方式来训练词嵌入。
+
+上述的直接训练方法都是通过词语与其上下文间的关系来进行训练的，这些方法分为两个类型。其中一种（NNLM、LBL、CBOW、Skip-gram）认为，一个词语应该可以被其上下文所预测出来。而一种该方法（C\&W）认为，应该存在一个打分函数，使得一个词语与其上下文之间的得分尽可能高。除此之外，这些方法还使用不同的方式来组合上下文词语\citeup{Lai2016}。
+
+本章介绍的词嵌入方法是一种直接训练的方法。它将会利用深度学习的技术，对LBL的一种改进方法ivLBL\citeup{Mnih2013}进行了改进。
+
+\BiSection{原理介绍}{}
+%在词嵌入的训练过程中，语料库$\mathcal{C}$依然是不可或缺的。这里会沿用公式\ref{e:corpus}中对于$\mathcal{C}$的定义。
+
+%对于一个词语$v \in \mathcal{V}$，我们很容易从语料库中找到包含这个词语的一个句子$s$，该句子满足$s \in \mathcal{C}, s_i = v$。$s$中除$s_i$以外的部分称为上下文。
+
+\BiSubsection{ivLBL}{}
+由于本章介绍的方法是基于ivLBL方法的改进，所以在这里首先介绍ivLBL方法\footnote{实际上，为了更好的介绍本章的模型，本小节的内容与原文\citeup{Mnih2013}介绍的ivLBL模型有一定偏差。原文使用了上下文词语间的独立假设，对本小节介绍的部分又进行了更加深入的改进。这一部分将不在本文的讨论范围之内。}。
+
+沿用公式\ref{e:corpus}中对于$\mathcal{C}$的定义，设有一个词语$w \in \mathcal{V}$，我们很容易从语料库中找到包含这个词语的一个句子$s$，该句子满足$s \in \mathcal{C}, s_i = w$。目标词语附近一定范围内的词语（除自身外）称为称为这个词语的上下文。即：
+\begin{equation}
+c = (s_l, \dots, s_{i - 1}, s_{i + 1}, \dots, s_r), 1 \leq l \leq i \leq r \leq |s|, l \neq r
+\end{equation}
+
+与其他基于上下文预测的词嵌入方法类似，ivLBL方法使用两个词嵌入矩阵$E$与$E'$，分别用于目标词与上下文中的词语的嵌入。这样，目标词$w$的嵌入表示为$E_w$，而上下文中的一个词语$h_i$的嵌入表示为$E'_{h_i}$。
+
+接下来需要根据整个上下文得到一个预测表示。预测表示是一个与$E_w$维度相同的向量。为了完成这个任务，需要一个表示函数$\hat{q}$。在ivLBL中，其定义如下：
+\begin{equation}
+\hat{q}(c) = \frac{1}{n}\sum_{i = 1}^{|c|}E'_{h_i}
+\end{equation}
+
+得到向量表示以后，我们需要一个打分函数$s_\theta$以评价预测向量与实际向量的相似程度。这个函数可以实现为一个简单的线性变换：
+\begin{equation}
+s_\theta(w, c) = \hat{q}(c)^\intercal E_w + b_w
+\end{equation}
+
+利用这样的打分函数，就可以进行目标词语的预测。
+
+\BiSubsection{上下文表示}{}
+上文中介绍了与上下文$c$有关的概念，以及上下文表示函数$\hat{q}$。而本课题使用的方法与ivLBL方法的不同之处就在于这两者。现有的ivLBL方法选择固定并且较短（论文中使用的是10，目标词语前后各5个词语）的上下文长度，这样的长度并不足以挖掘句子中的全部上下文信息。并且ivLBL使用的简单平均方式还会丢失词语的顺序信息。
+
+为了完整照顾整个句子中的所有上下文信息，我们设上下文的范围为整个句子。这样，对于句子$s$中的每一个词语$s_i$，我们都可以得到一个与之对应的上下文$h = (s_1, \dots, s_{i - 1}, s_{i + 1}, \dots, s_{|s|})$。
+
+令$e'_i = E'_{s_i}$，假设我们将$e'_i$组成的序列输入LSTM模型中，这样就可以得到一个输出序列$h_i$。由第\ref{s:classifer lstm}小节的介绍可以得知，输出项$h_{i - 1}$可以携带输入项$e'_1, \dots, e'_{i - 1}$的全部信息，这覆盖了上下文$h$的前半部分。
+
+但是这还不够，因为我们无法覆盖剩余的部分。为了解决这个问题，需要使用双向LSTM。
+
+\BiSubsection{双向LSTM}{}
+双向LSTM\citeup{Graves2005}是LSTM模型的一个变种，它分为前向连接和后向连接，其具有如图\ref{f:bidirectional lstm}所示的结构。其前向连接与第\ref{s:classifer lstm}小节中介绍的普通LSTM完全一致，而后向连接则将中间状态的传递方向改为了从$|s|$到$1$。
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics{bidirectional-LSTM}
+	\caption{双向LSTM结构}
+	\label{f:bidirectional lstm}
+	\vspace{-1em}
+\end{figure}
+
+双向LSTM中的前向LSTM细胞和后向LSTM细胞是相同形状的LSTM细胞，但它们之间的参数值互相独立，不能共享。$h_\text{fw}$是前向连接的输出，而$h_\text{bw}$是后向连接的输出。双向LSTM的完整定义如公式\ref{e:bilstm begin}--\ref{e:bilstm end}所述。
+
+\begin{align}
+	f_{\text{fw}, i} &= \sigma(W_{\text{f}, \text{fw}} e_{\text{fw}, i} + U_{\text{f}, \text{fw}} h_{\text{fw}, i - 1} + b_{\text{f}, \text{fw}}) \label{e:bilstm begin} \\
+	f_{\text{bw}, i} &= \sigma(W_{\text{f}, \text{bw}} e_{\text{bw}, i} + U_{\text{f}, \text{bw}} h_{\text{bw}, i + 1} + b_{\text{f}, \text{bw}}) \\
+	i_{\text{fw}, i} &= \sigma(W_{\text{i}, \text{fw}} e_{\text{fw}, i} + U_{\text{i}, \text{fw}} h_{\text{fw}, i - 1} + b_{\text{i}, \text{fw}}) \\
+	i_{\text{bw}, i} &= \sigma(W_{\text{i}, \text{bw}} e_{\text{bw}, i} + U_{\text{i}, \text{bw}} h_{\text{bw}, i + 1} + b_{\text{i}, \text{bw}}) \\
+	o_{\text{fw}, i} &= \sigma(W_{\text{o}, \text{fw}} e_{\text{fw}, i} + U_{\text{o}, \text{fw}} h_{\text{fw}, i - 1} + b_{\text{o}, \text{fw}}) \\
+	o_{\text{bw}, i} &= \sigma(W_{\text{o}, \text{bw}} e_{\text{bw}, i} + U_{\text{o}, \text{bw}} h_{\text{bw}, i + 1} + b_{\text{o}, \text{bw}}) \\
+	c_{\text{fw}, i} &= f_{\text{fw}, i} \circ c_{\text{fw}, i - 1} + i_{\text{fw}, i} \circ \tanh(W_{\text{c}, \text{fw}} e_{\text{fw}, i} + U_{\text{c}, \text{fw}} h_{\text{fw}, i - 1} + b_{\text{c}, \text{fw}}) \\
+	c_{\text{bw}, i} &= f_{\text{bw}, i} \circ c_{\text{bw}, i + 1} + i_{\text{bw}, i} \circ \tanh(W_{\text{c}, \text{bw}} e_{\text{bw}, i} + U_{\text{c}, \text{bw}} h_{\text{bw}, i + 1} + b_{\text{c}, \text{bw}}) \\
+	h_{\text{fw}, i} &= o_{\text{fw}, i} \circ \tanh(c_{\text{fw}, i}) \\
+	h_{\text{bw}, i} &= o_{\text{bw}, i} \circ \tanh(c_{\text{bw}, i}) \label{e:bilstm end}
+\end{align}
+
+\begin{comment}
+与上文所述的各种方法类似，词嵌入模型中包含两个词嵌入矩阵$E$与$E'$，分别用于目标词与上下文的嵌入。这样，可以得到目标词向量$e_i = E_v$与上下文词向量$e'_j = E'_{s_j}, j \neq i$。
+
+对于一个好的词嵌入，我们希望一个词语能够更容易被它的上下文所预测出来。即存在：
+\begin{equation}
+M_{E, E'}\bigl((s_1, \dots, s_{i - 1}, s_{i + 1}, \dots, s_{|s|})\bigr) = v
+\end{equation}
+$M_{E, E'}$是一个预测模型，而$E$与$E'$是它的参数。
+\end{comment}
