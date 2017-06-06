@@ -74,7 +74,7 @@ e_i = E_{x_i}
 
 循环神经网络的结构如图\ref{f:rnn}所示。其中，$e_i$如上文所述，作为循环神经网络的输入，而$h_i$是循环神经网络的输出。
 
-\begin{figure}[htbp]
+\begin{figure}[h]
 	\centering
 	\includegraphics{RNN}
 	\caption{RNN结构}
@@ -90,7 +90,7 @@ RNN细胞可以看作是一个带有可训练参数的函数，每个RNN细胞�
 
 LSTM与其它RNN的不同之处在于其独特的细胞结构，如图\ref{f:lstm}所示。LSTM的最大特点是其优秀的“记忆能力”，即能处理时间序列中间隔很长的序列。这得益于LSTM中加入的遗忘门、输入门和逻辑门的设计。
 
-\begin{figure}[htbp]
+\begin{figure}[h]
 	\centering
 	\includegraphics{LSTM}
 	\caption{LSTM细胞结构}
@@ -111,7 +111,7 @@ h_i &= o_i \circ \tanh(c_i) \label{e:lstm end}
 \BiSubsection{深层LSTM}{}
 与其它深度学习模型类似，LSTM网络也可以增加模型的层数以加强模型的学习能力。文献\cite{Sak2014}中给出了多种LSTM与RNN层叠加的方案。本课题使用两个LSTM层叠加的方式，使一个LSTM层的输出向量作为另一个LSTM层的输入向量，如图\ref{f:deep lstm}所示。
 
-\begin{figure}[htbp]
+\begin{figure}[h]
 	\centering
 	\includegraphics{deep-LSTM}
 	\caption{深层LSTM}
@@ -138,6 +138,7 @@ y' = F\bigl(\sigma(W_\text{full} h_{|s|} + b_\text{full})\bigr)
 \end{equation}
 
 \BiSubsection{模型训练}{}
+\label{s:classifer p-training}
 为了训练一个深度学习，需要定义一个损失函数，并且使用一种优化方法来最小化损失函数的值。
 
 损失函数是一种用于衡量预测值$y'$与真实值$y$之间的偏差的函数。当$y' = y$时，$L(y', y) = 0$；而当$y' \neq y$时，$L(y', y) > 0$。一般而言，预测值与真实值之间的偏差越大，损失函数的值也应越大。这样使用数值优化的方法来最小化损失函数的值，就可以得到预测更为真实的模型。
@@ -147,11 +148,17 @@ y' = F\bigl(\sigma(W_\text{full} h_{|s|} + b_\text{full})\bigr)
 L(y', y) = -\bigl(y \log(y') + (1 - y) \log(1 - y')\bigr)
 \end{equation}
 
+由于采样句的数量可能与原句不相等，因此会形成不平衡数据集。为了将数据集平衡化，在汇总训练数据的损失函数值时应为每个训练数据赋予一个权重$y(k - 1) + 1$。其中，$k$是训练集中采样居与原句的比例。这样，原句和采样句在训练中占有的权重就是相等的了。最终汇总的损失函数值如下：
+\begin{equation}
+\sum\bigl(y(k - 1) + 1\bigr) L(y', y)
+\end{equation}
+
 深度学习模型的训练大多使用基于梯度下降的优化算法。传统的随机梯度下降方法需要人为指定一个学习速率，并且在训练中途还可能需要进行学习速率的调整，这会给实验带来更多的麻烦。而一些自适应学习速率的优化算法则可以在学习过程中自行调节学习速率，例如Adagrad\citeup{Duchi2011}、Adadelta\citeup{Zeiler2012}、RMSprop\footnote{RMSprop并不是一个在论文中发表的算法，它是在多伦多大学的一个课堂讲义（\url{http://www.cs.toronto.edu/~tijmen/csc321/slides/lecture_slides_lec6.pdf}）中被提出的。}与Adam\citeup{Kingma2014}。为了降低实验的复杂程度，本课题使用了\cite{Ruder2016}中推荐的Adam算法进行模型训练。
 
 \BiSection{程序实现}{}
+\label{s:classifer implementation}
 为了完成深度学习的二分类方法，本项目实现了一个可以处理原始语料、构建模型并进行训练的系统，其结构如图\ref{f:classfier overall}所示。
-\begin{figure}[htbp]
+\begin{figure}[h]
 	\centering
 	\includegraphics{Cl-overall}
 	\caption{整体结构}
@@ -162,9 +169,10 @@ L(y', y) = -\bigl(y \log(y') + (1 - y) \log(1 - y')\bigr)
 程序实现分为数据预处理、模型训练和模型评价三个模块，根据模块特点的不同，分别使用了Java和Python两种编程语言实现。
 
 \BiSubsection{数据预处理}{}
+\label{s:classfier preprocess}
 由于Python的文本处理性能较差，会花费过长的时间，数据预处理的程序使用Java语言编写。预处理程序的结构如图\ref{f:classfier preprocess}所示。
 
-\begin{figure}[htbp]
+\begin{figure}[h]
 	\centering
 	\includegraphics{Cl-preprocess}
 	\caption{数据预处理}
@@ -184,7 +192,29 @@ L(y', y) = -\bigl(y \log(y') + (1 - y) \log(1 - y')\bigr)
 
 采样过程如上文中采样句的定义所述，会随机挑选被替换词和替换用词进行替换。在实际实验中，每个原句产生了5个采样句。
 
-为了使学习的结果更加稳定，上述步骤得到的结果最终会被乱序处理。由于数据量过大，乱序处理无法在内存中进行。因此本课题使用了外存储器辅助完成乱序。乱序的算法分为两步。第一步为分散阶段，在外存储器中打开一定数量的分块文件，每条记录会被附加到随机选择的一个分块文件中。第二部为收集阶段，程序逐个打开分块文件，并在内存中对当前分块文件的数据进行一次乱序，最后附加到输出文件。（这个用算法描述来写。）
+为了使学习的结果更加稳定，上述步骤得到的结果最终会被乱序处理。由于数据量过大，乱序处理无法在内存中进行。因此本课题使用了外存储器辅助完成乱序，如算法\ref{a:shuffling}所述。
+
+\begin{algorithm}[h]
+	\KwData{待乱序序列$X$}
+	\KwResult{乱序后序列$Y$}
+	\For{$i$ in $[1, n_\text{split}]$}{
+		以写入模式打开临时文件$F_i$\;
+	}
+	\For{$x$ in $X$}{
+		设$i$为$1$ -- $n_\text{split}$之间的随机数\;
+		将$x$写入$F_i$\;
+	}
+	\For{$i$ in $[1, n_\text{split}]$}{
+		以读取模式重新打开$F_i$\;
+		从$F_i$中读取全部内容$Y_\text{split}$\;
+		在$Y_\text{split}$上执行内存乱序算法\;
+		\For{$y$ in $Y_\text{split}$}{
+			输出$y$\;
+		}
+	}
+	\caption{外存储器乱序算法}
+	\label{a:shuffling}
+\end{algorithm}
 
 为了方便基于TensorFlow框架的Python程序读取数据，数据预处理阶段使用TFRecords格式保存数据。这样就可以避免书写Python程序读取数据，而通过TensorFlow中定义的reader来完成，避免数据的读取成为速度瓶颈。
 
