@@ -147,7 +147,39 @@ L_{w, \theta} = \log p(D = 1 \mid w, \theta) + \sum_{i = 1}^{k} \log\bigl(1 - p(
 为了完善实验的结果，本课题分别尝试使用目标词嵌入矩阵$E$、上下文词嵌入矩阵$E'$与二者之和$E + E'$产生词嵌入，而相似度评价函数则尝试了余弦相似度与平方欧式距离，他们的定义如下：
 \begin{align}
 \text{sim}_\text{c}(A, B) & = \frac{A \cdot B}{|A| |B|} \\
-\text{sim}_\text{e}(A, B) & = |A - B|^2
+\text{sim}_\text{e}(A, B) & = -|A - B|^2
 \end{align}
 
 \BiSection{实验结果}{}
+本章所使用的实验环境与表\ref{t:environment}相同，词嵌入的训练进行了一次，其参数与训练情况如表\ref{t:embedding train}所示，而结果如表\ref{t:embedding result}所示。
+
+\begin{table}[h]
+	\caption{实验结果}
+	\label{t:embedding train}
+	\vspace{0.5em}\centering\wuhao
+	\begin{tabular}{ccc}
+		\toprule[1.5pt]
+		词嵌入维数 & LSTM单元数 & 损失函数值 \\
+		\midrule[1pt]
+		300 & 128 & 14081.98 \\
+		\bottomrule[1.5pt]
+	\end{tabular}
+\end{table}
+
+\begin{table}[h]
+\caption{实验结果}
+\label{t:embedding result}
+\vspace{0.5em}\centering\wuhao
+\begin{tabular}{ccc}
+	\toprule[1.5pt]
+	相似度函数 & 词嵌入矩阵 & Spearman等级相关系数 \\
+	\midrule[1pt]
+	$\text{sim}_\text{c}$ & $E$ & 0.3860 \\
+	$\text{sim}_\text{c}$ & $E'$ &  0.3542 \\
+	$\text{sim}_\text{c}$ & $E + E'$ & 0.3756 \\
+	$\text{sim}_\text{e}$ & $E$ &  0.2017 \\
+	$\text{sim}_\text{e}$ & $E'$ & 0.0304 \\
+	$\text{sim}_\text{e}$ & $E + E'$ & 0.0943 \\
+	\bottomrule[1.5pt]
+\end{tabular}
+\end{table}

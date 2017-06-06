@@ -236,3 +236,36 @@ L(y', y) = -\bigl(y \log(y') + (1 - y) \log(1 - y')\bigr)
 将评价数据输入第\ref{s:classifer training}小节中构建的深度学习模型中，就可以得到每个句子的预测值$y'$，这样，用于TensorFlow图构建的大部分程序可以被复用。根据词语对ID将预测值分组，并且求预测值的平均值，就可以得到每个词语对的相似度评价。对于词典外词汇，由所有句子的预测值平均值代替本词语对的预测值平均值。由于模型性能的评价指标是Spearman等级相关系数，与预测值的绝对值无关。因此无需对输出做任何缩放处理。Spearman等级相关系数的计算由Excel软件完成。
 
 \BiSection{实验结果}{}
+本章所使用的实验环境如表\ref{t:environment}所示。深度学习实验共进行了两次，分别采用不同的参数。其结果如表\ref{t:classifer result}所示。
+\begin{table}[h]
+	\caption{实验环境}
+	\label{t:environment}
+	\vspace{0.5em}\centering\wuhao
+	\begin{tabular}{cc}
+		\toprule[1.5pt]
+		CPU & Intel Xeon E3-1230 \\
+		内存 & 16GB \\
+		显卡 & NVIDIA Tesla K40c \\
+		硬盘 & 240GB SSD \\
+		操作系统 & Ubuntu 16.04 \\
+		CUDA版本 & 8.0 \\
+		cuDNN版本 & 5.1 \\
+		TensorFlow版本 & 1.1.0 \\
+		Python版本 & Python 3.6 (Miniconda 3) \\
+		\bottomrule[1.5pt]
+	\end{tabular}
+\end{table}
+
+\begin{table}[h]
+	\caption{实验结果}
+	\label{t:classifer result}
+	\vspace{0.5em}\centering\wuhao
+	\begin{tabular}{cccccc}
+		\toprule[1.5pt]
+		词嵌入维数 & LSTM单元数 & LSTM层数 & 全连接层数 & 损失函数值 & Spearman等级相关系数 \\
+		\midrule[1pt]
+		300 & 128 & 2 & 0 & 0.5422 & 0.1214 \\
+		300 & 128 & 2 & 1 & 0.5448 & 0.0951 \\
+		\bottomrule[1.5pt]
+	\end{tabular}
+\end{table}
