@@ -166,6 +166,7 @@ L_{w, \theta} = \log p(D = 1 \mid w, \theta) + \sum_{i = 1}^{k} \log\bigl(1 - p(
 	\end{tabular}
 \end{table}
 
+\begin{comment}
 \begin{table}[h]
 \caption{实验结果}
 \label{t:embedding result}
@@ -182,4 +183,33 @@ L_{w, \theta} = \log p(D = 1 \mid w, \theta) + \sum_{i = 1}^{k} \log\bigl(1 - p(
 	$\text{sim}_\text{e}$ & $E + E'$ & 0.0943 \\
 	\bottomrule[1.5pt]
 \end{tabular}
+\end{table}
+
+\begin{table}[h]
+	\caption{实验结果}
+	\vspace{0.5em}\centering\wuhao
+	\begin{tabular}{cccc}
+		\toprule[1.5pt]
+		\diagbox{相似度函数}{相关系数}{词嵌入矩阵} & $E$ & $E'$ & $E + E'$ \\
+		\midrule[1pt]
+		$\text{sim}_\text{c}$ & 0.3860 & 0.3542 & 0.3756 \\
+		$\text{sim}_\text{e}$ & 0.2017 & 0.0304 & 0.0943 \\
+		\bottomrule[1.5pt]
+	\end{tabular}
+\end{table}
+\end{comment}
+
+\begin{table}[h]
+	\caption{实验结果}
+	\label{t:embedding result}
+	\vspace{0.5em}\centering\wuhao
+	\begin{tabular}{ccccc}
+		\toprule[1.5pt]
+		\multicolumn{2}{c}{\multirow{2}{*}{Spearman等级相关系数}} & \multicolumn{3}{c}{词嵌入矩阵} \\
+		& & $E$ & $E'$ & $E + E'$ \\
+		\midrule[1pt]
+		\multirow{2}{*}{相似度函数} & $\text{sim}_\text{c}$ & 0.3860 & 0.3542 & 0.3756 \\
+		& $\text{sim}_\text{e}$ & 0.2017 & 0.0304 & 0.0943 \\
+		\bottomrule[1.5pt]
+	\end{tabular}
 \end{table}
