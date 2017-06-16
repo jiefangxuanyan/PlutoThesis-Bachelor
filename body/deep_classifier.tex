@@ -38,6 +38,7 @@ M_\mathcal{C}(s) =
 利用这样的二分类器，我们就可以定义词语对$(v_\text{a}, v_\text{b})$的相似度：
 \begin{equation}
 \similarity(w_\text{a}, w_\text{b}) = E\Bigl(M_\mathcal{C}\bigl(f_\text{r}(s, i, v_\text{b})\bigr) \Bigm| s \in \mathcal{C}, s_i = v_\text{a}\Bigr)
+\label{e:avg}
 \end{equation}
 其中$E$为数学期望。其中的思想是，利用包含词语$v_\text{a}$的句子以$v_\text{b}$替换得到的替换句测试二分类器$M_\mathcal{C}$，若二分类器容易将这样的替换句误判为原句，则说明词语对$(v_\text{a}, v_\text{b})$相似。为了提高准确性，应同时考虑从$v_\text{a}$到$v_\text{b}$和从$v_\text{b}$到$v_\text{a}$的替换。
 
@@ -260,13 +261,13 @@ L(y', y) = -\bigl(y \log(y') + (1 - y) \log(1 - y')\bigr)
 	\caption{实验结果}
 	\label{t:classifer result}
 	\vspace{0.5em}\centering\wuhao
-	\begin{tabular}{cccccc}
+	\begin{tabular}{ccccccc}
 		\toprule[1.5pt]
-		词嵌入维数 & LSTM单元数 & LSTM层数 & 全连接层数 & 损失函数值 & Spearman等级相关系数 \\
+		训练次数 & 词嵌入维数 & LSTM单元数 & LSTM层数 & 全连接层数 & 损失函数值 & Spearman等级相关系数 \\
 		\midrule[1pt]
-		300 & 128 & 2 & 0 & 0.5422 & 0.1313 \\
-		300 & 300 & 3 & 0 & 0.5972 & 0.1484 \\
-		300 & 128 & 2 & 1 & 0.5448 & 0.1579 \\
+		第1次 & 300 & 128 & 2 & 0 & 0.5422 & 0.1313 \\
+		第2次 & 300 & 300 & 3 & 0 & 0.5972 & 0.1484 \\
+		第3次 & 300 & 128 & 2 & 1 & 0.5448 & 0.1579 \\
 		\bottomrule[1.5pt]
 	\end{tabular}
 \end{table}

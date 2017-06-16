@@ -4,6 +4,156 @@
 \label{c:ensemble}
 集成学习是一种将多个个体学习器进行组合，而获得更高性能的学习器的机器学习方法。这种方法通常可以得到好于任何一个个体学习器的性能。
 
-主流的集成学习方法分为三种，分别被称为boosting、bagging和stacking。其中，boosting方法使用迭代方法训练一系列学习器，每次迭代都根据上一个学习器的输出改变样本的权重，使得上一个学习器分类错误的样本获得更高权重；Bagging使用一种有放回的“自助采样”方法生成多个样本集，用每个样本集训练一个基学习器，并使用投票方式将这些学习器的输出进行组合；stacking则使用一个次级学习器来组合基学习器的输出。
+主流的集成学习方法分为三种，分别被称为boosting、bagging和stacking。其中，boosting方法使用迭代方法训练一系列学习器，每次迭代都根据上一个学习器的输出改变样本的权重，使得上一个学习器分类错误的样本获得更高权重；Bagging使用一种有放回的“自助采样”方法生成多个样本集，用每个样本集训练一个基学习器，并使用投票方式将这些学习器的输出进行组合；stacking则使用一个额外的学习器来组合基学习器的输出。
 
 本课题使用集成学习的方法来结合第\ref{c:classifer}至\ref{c:dict lib}章给出的三种方法的输出。由于各个基学习器的形式不同，本课题使用了stacking方法。
+
+\BiSection{原理介绍}{}
+如上文所述，stacking方法用一个学习器来组合其它学习器的输出。其中，被组合的学习器称为初级学习器$M_i$，而用于组合的学习器称为次级学习器$M_\text{e}$。
+
+设集成学习系统的输入的特征为$x$，而标注为$y$，则每个初级学习器的训练过程与一般的机器学习过程相同。每一个初级学习器使用同样的特征与标注独立地进行训练，即训练目标为$M_i(x) \rightarrow y$。训练完成后，每个初级学习器都会给出对标注的一个预测$M_i(x) = y'_i$。
+
+次级学习器$M_\text{e}$则以初级学习器的输出$y'_i$作为输入，其训练目标为$M_\text{e}(y'_1, \dots, y'_n) \rightarrow y$。这样，次级学习器就起到了组合初级学习器的输出的作用。
+
+在stacking方法中，我们通常使用不同的机器学习方法产生初级学习器，各个初级学习器之间是异构的，这意味着初级学习器的数量不会很多（否则将会给初级学习器的构造过程带来巨大的工作量）。于是，stacking方法一般会使用相对较为简单的机器学习方法。本课题中分别尝试使用线性回归、岭回归与LASSO三种方法构造次级学习器。
+
+\BiSubsection{线性回归}{}
+线性回归是最为简单的回归方式之一，它使用一个线性函数产生对标注值的预测。假设我们有一个数据集$\bigl\{(x_1, y_1), (x_2, y_2), \dots, (x_n, y_n)\bigr\}$，其中$x_i \in \mathbb{R}^m, y_i \in \mathbb{R}$。线性回归具有如下的形式：
+\begin{equation}
+y'_i = \beta^\intercal x_i + b
+\label{e:linear regression}
+\end{equation}
+其中，系数$\beta$与置偏$b$都是线性回归的系数。
+
+线性回归的最优解很容易通过最小二乘法得到。最小二乘法令预测值与实际值之差的平方和最小，即：
+\begin{equation}
+(\beta^*, b^*) = \argmin_{(\beta, b)} \sum_{i = 1}^{n} (y_i - y'_i)^2
+\end{equation}
+
+将公式\ref{e:linear regression}中的变量进行一些变形，设：
+\begin{align}
+	X &=
+	\begin{pmatrix}
+		x^\intercal_1 & 1 \\
+		x^\intercal_2 & 1 \\
+		\vdots & \vdots \\
+		x^\intercal_n & 1 \\
+	\end{pmatrix} \\
+	Y &= (y_1, y_2, \dots, y_n)^\intercal\\
+	\hat{\beta}^* &=
+	\begin{pmatrix}
+		\beta^* \\
+		b^*
+	\end{pmatrix}
+\end{align}
+则可以最小二乘法的目标变为：
+\begin{equation}
+\hat{\beta}^* = \argmin_{\hat{\beta}} (Y - X \hat{\beta})^\intercal (Y - X \hat{\beta})
+\end{equation}
+
+通过求导的方式，可以得到：
+\begin{equation}
+\hat{\beta}^* = (X^\intercal X)^{-1} X^\intercal Y
+\end{equation}
+即是线性回归的最优解。
+
+\BiSubsection{岭回归与LASSO}{}
+在样本特征较多，而样本数量较少时，线性回归容易出现过拟合的问题。解决这个问题的方式是对模型参数添加规范化项。
+
+如果规范化项为L2规范化，则称为岭回归：
+\begin{equation}
+\hat{\beta}^* = \argmin_{\hat{\beta}} (Y - X \hat{\beta})^\intercal (Y - X \hat{\beta}) + \lambda ||\hat{\beta}||^2_2
+\end{equation}
+
+如果规范化项为L1规范化，则称为LASSO：
+\begin{equation}
+\hat{\beta}^* = \argmin_{\hat{\beta}} (Y - X \hat{\beta})^\intercal (Y - X \hat{\beta}) + \lambda ||\hat{\beta}||_1
+\end{equation}
+
+超参数$\lambda$是规范化项的系数。本课题的实验中将会手动调整这个系数的值，直到取得比较好的模型性能。
+
+\BiSubsection{辅助特征的提取}{}
+\label{s:ensemble features}
+除了个方法输出的词语相似度计算结果以外，本课题还尝试从模型的计算过程中提取额外的特征以辅助集成学习的训练。
+
+对于深度学习的二分类方法，考虑公式\ref{e:avg}的内容。要针对一个词语对计算数学期望，就必须对$M_\mathcal{C}$的输出求平均值。本课题除需要求得的平均值之外，还将输出的方差作为辅助特征输入集成学习器，这样就能使得集成学习器拥有更多的特征来判断总的词语相似度。
+
+对于基于词典或知识库的方法，第\ref{s:dict features}小节提到这种方法并没有完成对词语相似度的评价，而是直接将提取的特征输入集成学习器。实际上，如果希望基于词典或知识库的方法独立给出词语相似度评价，仍然需要某些手段将特征映射到输出，这与集成学习器完成的任务是类似的。因此如果如此实现模型，会给系统引入不必要的复杂度。
+
+\BiSubsection{模型训练}{}
+由于集成学习器属于有监督学习，如果要训练集成学习器，就必须找到一些有标注的词语相似度数据集作为训练数据。
+
+一种方法是利用本课题的背景任务——NLPCC-ICCPOL 2016会议中的“中文词语相似度计算”开放任务的组织者在比赛开始前提供的样本数据。这些样本数据中有40个词语对，其格式与PKU-500数据集相同。使用初级学习器在这40个词语对上的输出，就可以训练次级学习器。
+
+另一种方法是在PKU-500数据集上使用交叉验证法。对于数据集$D$，交叉验证法将其分为$k$个等大小的互斥子集，即$D = \bigcup_{i = 1}^k D_i, \forall (i, j), D_i \cap D_j = \emptyset$。这样，对于每一个子集$D_i$，可以用$D - D_i$训练集成学习器，而令集成学习器产生$D_i$的输出。这样，就可以利用PKU-500数据集的标注训练模型，而不必担心训练数据与评价数据发生重叠。
+
+在极端情况下，令$k = |D|$，这样每一个子集中只包含一个样本。这种方式称为留一法。这种方式能最大限度地利用有标注的数据集进行训练
+
+\BiSection{程序实现}{}
+本方法使用Python语言的scikit-learn库来完成集成学习。得益于scikit-learn库的接口易用性，本方法的程序实现非常的简单。
+
+两种深度学习模型的输出被存储在文本文件中。进行集成学习的Python程序需读取文本文件的内容。而同义词词林扩展版则以自己的文本格式保存在文件中。程序首先解析并读取同义词词林扩展版，接下来读取词语对在同义词词林扩展版中查询得到要提取的特征。
+
+上面所有的输出与特征将会转化为浮点型向量，并且拼接在一起。最终形成一个8维向量，其内容如表\ref{t:features}所述。
+
+\begin{table}[h]
+	\caption{集成学习器的输入向量}
+	\label{t:features}
+	\vspace{0.5em}\centering\wuhao
+	\begin{tabular}{ccc}
+		\toprule[1.5pt]
+		维度 & 模型 & 内容 \\
+		\midrule[1pt]
+		1 & \multirow{3}{*}{深度学习的二分类方法} & 输出均值 \\
+		2 &  & 输出方差 \\
+		3 &  & 词语在语料库中出现 \\
+		\hline
+		4 & \multirow{2}{*}{深度学习辅助词嵌入方法} & 输出相似度 \\
+		5 &  & 词语在语料库中出现 \\
+		\hline
+		6 & \multirow{3}{*}{基于词典与知识库的方法} & 最近公共祖先深度 \\
+		7 &  & 左词语义项数 \\
+		8 &  & 右词语义项数 \\
+		\bottomrule[1.5pt]
+	\end{tabular}
+\end{table}
+
+数据集的人工标注以代码形式存储在项目中，使用scikit-learn建立线性回归、岭回归与LASSO模型，输入上述向量和数据集中的标注即可进行训练。运行模型评价时，将训练数据的特征输入训练好的模型，并利用SciPy计算模型输出与标准结果之间的Spearman等级相关系数。
+
+\BiSection{实验结果}{}
+本章的实验平台为作者的笔记本电脑，其配置如表\ref{t:local environment}所示。实验结果如表所示。
+
+\begin{table}[h]
+	\caption{实验环境}
+	\label{t:local environment}
+	\vspace{0.5em}\centering\wuhao
+	\begin{tabular}{cc}
+		\toprule[1.5pt]
+		CPU & Intel Core i7-4700MQ \\
+		内存 & 8GB \\
+		硬盘 & 256GB SSD + 1TB HDD \\
+		操作系统 & Windows 10 专业版 \\
+		scikit-learn版本 & 0.18.1 \\
+		Python版本 & Python 3.6 (Miniconda 3) \\
+		\bottomrule[1.5pt]
+	\end{tabular}
+\end{table}
+
+\begin{table}[h]
+	\caption{实验环境}
+	\label{t:ensemble result}
+	\vspace{0.5em}\centering\wuhao
+	\begin{tabular}{cccc}
+		\toprule[1.5pt]
+		训练集划分 & 集成学习器 & 超参数设置 & Spearman等级相关系数 \\
+		\midrule[1pt]
+		\multirow{3}{*}{样本数据} & 线性回归 & 无 & 0.3610 \\
+		& 岭回归 & $\alpha = 0.63$ & 0.3667 \\
+		& LASSO & $\alpha = 0.001$ & 0.3649 \\
+		\hline
+		\multirow{3}{*}{交叉验证} & 线性回归 & 无 & 0.4849 \\
+		& 岭回归 & $\alpha = 0.55$ & 0.4855 \\
+		& LASSO & $\alpha = 10^{-4}$ & 0.4853 \\
+		\bottomrule[1.5pt]
+	\end{tabular}
+\end{table}
