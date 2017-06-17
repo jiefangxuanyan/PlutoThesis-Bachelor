@@ -151,7 +151,7 @@ L_{w, \theta} = \log p(D = 1 \mid w, \theta) + \sum_{i = 1}^{k} \log\bigl(1 - p(
 \end{align}
 
 \BiSection{实验结果}{}
-本章所使用的实验环境与表\ref{t:environment}相同，词嵌入的训练进行了一次，其参数与训练情况如表\ref{t:embedding train}所示，而结果如表\ref{t:embedding result}所示。
+本章所使用的实验环境与表\ref{t:hw environment}、表\ref{t:sw environment}相同，词嵌入的训练进行了一次，其参数与训练情况如表\ref{t:embedding train}所示，而结果如表\ref{t:embedding result}所示。
 
 \begin{table}[h]
 	\caption{实验结果}
@@ -168,6 +168,7 @@ L_{w, \theta} = \log p(D = 1 \mid w, \theta) + \sum_{i = 1}^{k} \log\bigl(1 - p(
 
 \begin{table}[h]
 \caption{实验结果}
+\label{t:embedding result}
 \vspace{0.5em}\centering\wuhao
 \begin{tabular}{ccc}
 	\toprule[1.5pt]
@@ -182,32 +183,3 @@ L_{w, \theta} = \log p(D = 1 \mid w, \theta) + \sum_{i = 1}^{k} \log\bigl(1 - p(
 	\bottomrule[1.5pt]
 \end{tabular}
 \end{table}
-
-\begin{comment}
-\begin{table}[h]
-	\caption{实验结果}
-	\vspace{0.5em}\centering\wuhao
-	\begin{tabular}{cccc}
-		\toprule[1.5pt]
-		\diagbox{相似度函数}{相关系数}{词嵌入矩阵} & $E$ & $E'$ & $E + E'$ \\
-		\midrule[1pt]
-		$\text{sim}_\text{c}$ & 0.3860 & 0.3542 & 0.3756 \\
-		$\text{sim}_\text{e}$ & 0.2017 & 0.0304 & 0.0943 \\
-		\bottomrule[1.5pt]
-	\end{tabular}
-\end{table}
-
-\begin{table}[h]
-	\caption{实验结果}
-	\vspace{0.5em}\centering\wuhao
-	\begin{tabular}{ccccc}
-		\toprule[1.5pt]
-		\multicolumn{2}{c}{\multirow{2}{*}{Spearman等级相关系数}} & \multicolumn{3}{c}{词嵌入矩阵} \\
-		& & $E$ & $E'$ & $E + E'$ \\
-		\midrule[1pt]
-		\multirow{2}{*}{相似度函数} & $\text{sim}_\text{c}$ & 0.3860 & 0.3542 & 0.3756 \\
-		& $\text{sim}_\text{e}$ & 0.2017 & 0.0304 & 0.0943 \\
-		\bottomrule[1.5pt]
-	\end{tabular}
-\end{table}
-\end{comment}
