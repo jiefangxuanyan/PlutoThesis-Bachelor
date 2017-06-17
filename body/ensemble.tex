@@ -151,28 +151,36 @@ y'_i = \beta^\intercal x_i + b
 数据集的人工标注以代码形式存储在项目中，使用scikit-learn建立线性回归、岭回归与LASSO模型，输入上述向量和数据集中的标注即可进行训练。运行模型评价时，将训练数据的特征输入训练好的模型，并利用SciPy计算模型输出与标准结果之间的Spearman等级相关系数。
 
 \BiSection{实验结果}{}
-本章的实验平台为作者的笔记本电脑，其配置如表\ref{t:local environment}所示。实验结果如表\ref{t:ensemble result}所示。
+本章的实验平台为作者的笔记本电脑，其配置如表\ref{t:local hw environment}与表\ref{t:local sw environment}所示。实验结果如表\ref{t:ensemble result}所示。
 
 \begin{table}[h]
-	\caption{实验环境}
-	\label{t:local environment}
+	\caption{硬件环境}
+	\label{t:local hw environment}
 	\vspace{0.5em}\centering\wuhao
-	\begin{tabular}{cc}
+	\begin{tabular}{ccc}
 		\toprule[1.5pt]
-		项目 & 参数 \\
+		CPU & 内存 & 硬盘 \\
 		\midrule[1pt]
-		CPU & Intel Core i7-4700MQ \\
-		内存 & 8GB \\
-		硬盘 & 256GB SSD + 1TB HDD \\
-		操作系统 & Windows 10 专业版 \\
-		scikit-learn版本 & 0.18.1 \\
-		Python版本 & Python 3.6 (Miniconda 3) \\
+		Intel Core i7-4700MQ & 8GB& 256GB SSD + 1TB HDD \\
 		\bottomrule[1.5pt]
 	\end{tabular}
 \end{table}
 
 \begin{table}[h]
-	\caption{实验环境}
+\caption{软件环境}
+\label{t:local sw environment}
+\vspace{0.5em}\centering\wuhao
+\begin{tabular}{ccc}
+	\toprule[1.5pt]
+	操作系统 & scikit-learn版本 & Python版本 \\
+	\midrule[1pt]
+	Windows 10 专业版 & 0.18.1 & Python 3.6 (Miniconda 3) \\
+	\bottomrule[1.5pt]
+\end{tabular}
+\end{table}
+
+\begin{table}[h]
+	\caption{实验结果}
 	\label{t:ensemble result}
 	\vspace{0.5em}\centering\wuhao
 	\begin{tabular}{cccc}

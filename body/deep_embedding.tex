@@ -151,10 +151,10 @@ L_{w, \theta} = \log p(D = 1 \mid w, \theta) + \sum_{i = 1}^{k} \log\bigl(1 - p(
 \end{align}
 
 \BiSection{实验结果}{}
-本章所使用的实验环境与表\ref{t:hw environment}、表\ref{t:sw environment}相同，词嵌入的训练进行了一次，其参数与训练情况如表\ref{t:embedding train}所示，而结果如表\ref{t:embedding result}所示。
+本章所使用的实验环境与表\ref{t:hw environment}、表\ref{t:sw environment}相同，词嵌入的训练进行了一次，其参数与训练情况如表\ref{t:embedding train}所示，损失函数的下降情况如图\ref{f:embedding loss}，而结果如表\ref{t:embedding result}所示。
 
 \begin{table}[h]
-	\caption{实验结果}
+	\caption{训练情况}
 	\label{t:embedding train}
 	\vspace{0.5em}\centering\wuhao
 	\begin{tabular}{ccc}
@@ -165,6 +165,14 @@ L_{w, \theta} = \log p(D = 1 \mid w, \theta) + \sum_{i = 1}^{k} \log\bigl(1 - p(
 		\bottomrule[1.5pt]
 	\end{tabular}
 \end{table}
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[trim={11.6cm 17.15cm 2.4cm 8cm},clip]{Em-train}
+	\caption{损失函数下降情况}
+	\label{f:embedding loss}
+	\vspace{-1em}
+\end{figure}
 
 \begin{table}[h]
 \caption{实验结果}
@@ -183,3 +191,5 @@ L_{w, \theta} = \log p(D = 1 \mid w, \theta) + \sum_{i = 1}^{k} \log\bigl(1 - p(
 	\bottomrule[1.5pt]
 \end{tabular}
 \end{table}
+
+通过损失函数的下降情况，可以确认损失函数已经收敛。实验结果表明，使用余弦相似度评价目标词嵌入矩阵可以取得最好的性能。特别地，平方欧氏距离并不适合用于衡量词嵌入向量间的相似度，其效果与余弦相似度差距巨大。本方法单独用于解决中文词语相似度问题已经能够得到非常好的成绩，甚至能超过参加开放任务的2/3的系统。
