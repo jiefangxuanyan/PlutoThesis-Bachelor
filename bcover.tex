@@ -2,7 +2,7 @@
 
 \newcommand{\chinesethesistitle}{中文词语相似度计算} %授权书用，无需断行
 %\newcommand{\englishthesistitle}{\uppercase{english title is undetermmined!}} %\uppercase作用：将英文标题字母全部大写；
-\newcommand{\chinesethesistime}{2017~年~5~月}  %封面底部的日期中文形式
+\newcommand{\chinesethesistime}{2017~年~6~月}  %封面底部的日期中文形式
 
 
 \ctitle{中文词语相似度计算}  %封面用论文标题，自己可手动断行
@@ -24,19 +24,24 @@
 \BiAppendixChapter{摘~~~~要}{}  %使用winedt编辑时文档结构图（toc）中为了显示摘要，故增加此句；
 \fi
 \cabstract{
-摘要是论文内容的高度概括，应具有独立性和自含性，即不阅读论文的全文，就能获得必要的信息。
-摘要应包括本论文的目的、主要研究内容、研究方法、创造性成果及其理论与实际意义。
-摘要中不宜使用公式、化学结构式、图表和非公知公用的符号和术语，不标注引用文献编号。避免将摘要写成目录式的内容介绍。
+中文词语相似度计算的目的是使用自动化的方法给出一个量化的指标，来衡量一对词语之间的相似程度。本课题取自 NLPCC-ICCPOL 2016 会议中一个开放任务。本文使用了深度学习的二分类方法、深度学习辅助词嵌入方法与基于词典或知识库的方法计算词语相似度，并使用集成学习方法结合其他方法的结果。
+
+深度学习的二分类方法使用了生成替换句的手段，将无监督回归问题转化为有监督分类问题，并且使用深层 LSTM 的技术解决了分类问题。深度学习辅助词嵌入方法利用词嵌入计算词语相似度，并改进了现有的 ivLBL 方法，利用双向 LSTM 计算上下文向量。基于词典或知识库的方法从同义词词林扩展版中提取有用的特征用于计算。集成学习方法使用了 stacking 方法，并尝试了线性回归、岭回归与 LASSO 三种回归模型。
+
+词语相似度计算方法的性能使用系统输出与人工标注间的 Spearman 等级相关系数来衡量。本文所介绍的方法可以得到 0.4855 的成绩。在不依赖 PKU-500 数据集的情况下，成绩也可以达到 0.3667。
 }
 
-\ckeywords{关键词~1；关键词~2；关键词~3；……；关键词~6（关键词总共~3~—~6~个，最后一个关键词后面没有标点符号）}
+\ckeywords{词语相似度；深度学习；词嵌入；同义词词林；集成学习}
 
 \eabstract{
-Externally pressurized gas bearing has been widely used in the field of aviation, semiconductor, weave, and measurement apparatus because of its advantage of high accuracy, little friction, low heat distortion, long life-span, and no pollution. In this thesis, based on the domestic and overseas researching……
+Chinese word similarity measurement is a task aiming to provide a quantized measurement of the similarity of a pair of Chinese words. This project came from a shared task from the conference NLPCC-ICCPOL 2016. This thesis utilized deep learning classification method, deep learning aided word embedding method and dictionary / knowledge base based method to calculate word similarity. Then, ensemble learning method is used to combine results generated from other methods.
 
+Deep learning classification method uses a means of generating word-replaced sentences to transform the unsupervised regression problem into a supervised classification problem. After that, deep LSTMs are used to solve the classification problem. Deep learning aided word embedding method makes use of word embedding to calculate word similarity. It improves the existing ivLBL method, calculating context vectors with bidirectional LSTMs. Dictionary / knowledge base based method extracts useful features from Tongyici Cilin (Extended). Ensemble learning uses stacking method, makes attempts with linear regression, ridge regression and LASSO.
+
+The performance of word similarity measurement methods is measured by the Spearman's rank correlation coefficient between the system outputs and human annotations. The method introduced by this thesis achieved a performance of 0.4855. Even if not to depend on the PKU-500 dataset, the performance can reach 0.3667.
 }
 
-\ekeywords{keyword 1, keyword 2, keyword 3, ……, keyword 6 (no punctuation at the end) 英文摘要与中文摘要的内容应一致，在语法、用词上应准确无误。}
+\ekeywords{word similarity, deep learning, word embedding, Tongyici Cilin, ensemble learning}
 
 \makecover
 \clearpage 
