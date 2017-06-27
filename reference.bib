@@ -1,358 +1,198 @@
-% !Mode:: "TeX:UTF-8"
+% Encoding: UTF-8
 
-@Inbook{Wu2016,
-author="Wu, Yunfang
-and Li, Wei",
-editor="Lin, Chinyew
-and Xue, Nianwen
-and Zhao, Dongyan
-and Huang, Xuanjing
-and Feng, Yansong",
-title="Overview of the NLPCC-ICCPOL 2016 Shared Task: Chinese Word Similarity Measurement",
-bookTitle="Natural Language Understanding and Intelligent Applications: 5th CCF Conference on Natural Language Processing and Chinese Computing, NLPCC 2016, and 24th International Conference on Computer Processing of Oriental Languages, ICCPOL 2016, Kunming, China, December 2--6, 2016, Proceedings",
-year="2016",
-publisher="Springer International Publishing",
-address="Cham",
-pages="828--839",
-isbn="978-3-319-50496-4",
-doi="10.1007/978-3-319-50496-4_75",
-url="http://dx.doi.org/10.1007/978-3-319-50496-4_75"
-}
-
-@article{Hochreiter1997,
-author = { Sepp Hochreiter  and  Jürgen Schmidhuber },
-title = {Long Short-Term Memory},
-journal = {Neural Computation},
-volume = {9},
-number = {8},
-pages = {1735-1780},
-year = {1997},
-doi = {10.1162/neco.1997.9.8.1735},
-
-URL = { 
-        http://dx.doi.org/10.1162/neco.1997.9.8.1735
-    
-},
-eprint = { 
-        http://dx.doi.org/10.1162/neco.1997.9.8.1735
-    
-}
-,
-    abstract = { Learning to store information over extended time intervals by recurrent backpropagation takes a very long time, mostly because of insufficient, decaying error backflow. We briefly review Hochreiter's (1991) analysis of this problem, then address it by introducing a novel, efficient, gradient based method called long short-term memory (LSTM). Truncating the gradient where this does not do harm, LSTM can learn to bridge minimal time lags in excess of 1000 discrete-time steps by enforcing constant error flow through constant error carousels within special units. Multiplicative gate units learn to open and close access to the constant error flow. LSTM is local in space and time; its computational complexity per time step and weight is O. 1. Our experiments with artificial data involve local, distributed, real-valued, and noisy pattern representations. In comparisons with real-time recurrent learning, back propagation through time, recurrent cascade correlation, Elman nets, and neural sequence chunking, LSTM leads to many more successful runs, and learns much faster. LSTM also solves complex, artificial long-time-lag tasks that have never been solved by previous recurrent network algorithms. }
-}
-
-@article{Gers2000,
-author = { Felix A. Gers  and  Jürgen Schmidhuber  and  Fred Cummins },
-title = {Learning to Forget: Continual Prediction with LSTM},
-journal = {Neural Computation},
-volume = {12},
-number = {10},
-pages = {2451-2471},
-year = {2000},
-doi = {10.1162/089976600300015015},
-
-URL = { 
-        http://dx.doi.org/10.1162/089976600300015015
-    
-},
-eprint = { 
-        http://dx.doi.org/10.1162/089976600300015015
-    
-}
-,
-    abstract = { Long short-term memory (LSTM; Hochreiter \& Schmidhuber, 1997) can solve numerous tasks not solvable by previous learning algorithms for recurrent neural networks (RNNs). We identify a weakness of LSTM networks processing continual input streams that are not a priori segmented into subsequences with explicitly marked ends at which the network's internal state could be reset. Without resets, the state may grow indefinitely and eventually cause the network to break down. Our remedy is a novel, adaptive “forget gate” that enables an LSTM cell to learn to reset itself at appropriate times, thus releasing internal resources. We review illustrative benchmark problems on which standard LSTM outperforms other RNN algorithms. All algorithms (including LSTM) fail to solve continual versions of these problems. LSTM with forget gates, however, easily solves them, and in an elegant way. }
-}
-
-@inproceedings{Sak2014,
-	author    = {Hasim Sak and
-	Andrew W. Senior and
-	Fran{\c{c}}oise Beaufays},
-	title     = {Long short-term memory recurrent neural network architectures for
-	large scale acoustic modeling},
-	booktitle = {{INTERSPEECH} 2014, 15th Annual Conference of the International Speech
-	Communication Association, Singapore, September 14-18, 2014},
-	pages     = {338--342},
-	year      = {2014},
-	crossref  = {DBLP:conf/interspeech/2014},
-	url       = {http://www.isca-speech.org/archive/interspeech_2014/i14_0338.html},
-	timestamp = {Mon, 30 Jan 2017 12:13:12 +0100},
-	biburl    = {http://dblp.uni-trier.de/rec/bib/conf/interspeech/SakSB14},
-	bibsource = {dblp computer science bibliography, http://dblp.org}
-}
-
-@proceedings{DBLP:conf/interspeech/2014,
-	editor    = {Haizhou Li and
-	Helen M. Meng and
-	Bin Ma and
-	Engsiong Chng and
-	Lei Xie},
-	title     = {{INTERSPEECH} 2014, 15th Annual Conference of the International Speech
-	Communication Association, Singapore, September 14-18, 2014},
-	publisher = {{ISCA}},
-	year      = {2014},
-	url       = {http://www.isca-speech.org/archive/interspeech_2014},
-	timestamp = {Mon, 30 Jan 2017 12:13:12 +0100},
-	biburl    = {http://dblp.uni-trier.de/rec/bib/conf/interspeech/2014},
-	bibsource = {dblp computer science bibliography, http://dblp.org}
-}
-
-@article{Duchi2011,
-	author = {Duchi, John and Hazan, Elad and Singer, Yoram},
-	title = {Adaptive Subgradient Methods for Online Learning and Stochastic Optimization},
-	journal = {J. Mach. Learn. Res.},
-	issue_date = {2/1/2011},
-	volume = {12},
-	month = 7,
-	year = {2011},
-	issn = {1532-4435},
-	pages = {2121--2159},
-	numpages = {39},
-	url = {http://dl.acm.org/citation.cfm?id=1953048.2021068},
-	acmid = {2021068},
-	publisher = {JMLR.org},
-}
-
-@article{Zeiler2012,
-	author    = {Matthew D. Zeiler},
-	title     = {{ADADELTA:} An Adaptive Learning Rate Method},
-	journal   = {CoRR},
-	volume    = {abs/1212.5701},
-	year      = {2012},
-	url       = {http://arxiv.org/abs/1212.5701},
-	timestamp = {Wed, 02 Jan 2013 09:49:04 +0100},
-	biburl    = {http://dblp.uni-trier.de/rec/bib/journals/corr/abs-1212-5701},
-	bibsource = {dblp computer science bibliography, http://dblp.org}
-}
-
-@article{Kingma2014,
-	author    = {Diederik P. Kingma and
-	Jimmy Ba},
-	title     = {Adam: {A} Method for Stochastic Optimization},
-	journal   = {CoRR},
-	volume    = {abs/1412.6980},
-	year      = {2014},
-	url       = {http://arxiv.org/abs/1412.6980},
-	timestamp = {Thu, 01 Jan 2015 19:51:08 +0100},
-	biburl    = {http://dblp.uni-trier.de/rec/bib/journals/corr/KingmaB14},
-	bibsource = {dblp computer science bibliography, http://dblp.org}
-}
-
-@article{Ruder2016,
-	author    = {Sebastian Ruder},
-	title     = {An overview of gradient descent optimization algorithms},
-	journal   = {CoRR},
-	volume    = {abs/1609.04747},
-	year      = {2016},
-	url       = {http://arxiv.org/abs/1609.04747},
-	timestamp = {Mon, 03 Oct 2016 17:51:10 +0200},
-	biburl    = {http://dblp.uni-trier.de/rec/bib/journals/corr/Ruder16},
-	bibsource = {dblp computer science bibliography, http://dblp.org}
-}
-
-@article{Bengio2003,
-	author = {Bengio, Yoshua and Ducharme, R{\'e}jean and Vincent, Pascal and Janvin, Christian},
-	title = {A Neural Probabilistic Language Model},
-	journal = {J. Mach. Learn. Res.},
-	issue_date = {3/1/2003},
-	volume = {3},
-	month = {3},
-	year = {2003},
-	issn = {1532-4435},
-	pages = {1137--1155},
-	numpages = {19},
-	url = {http://dl.acm.org/citation.cfm?id=944919.944966},
-	acmid = {944966},
-	publisher = {JMLR.org},
-}
-
-@inproceedings{Mnih2007,
-	author = {Mnih, Andriy and Hinton, Geoffrey},
-	title = {Three New Graphical Models for Statistical Language Modelling},
-	booktitle = {Proceedings of the 24th International Conference on Machine Learning},
-	series = {ICML '07},
-	year = {2007},
-	isbn = {978-1-59593-793-3},
-	location = {Corvalis, Oregon, USA},
-	pages = {641--648},
-	numpages = {8},
-	url = {http://doi.acm.org/10.1145/1273496.1273577},
-	doi = {10.1145/1273496.1273577},
-	acmid = {1273577},
-	publisher = {ACM},
-	address = {New York, NY, USA},
-}
-
-@inproceedings{Collobert2008,
-	author = {Collobert, Ronan and Weston, Jason},
-	title = {A Unified Architecture for Natural Language Processing: Deep Neural Networks with Multitask Learning},
-	booktitle = {Proceedings of the 25th International Conference on Machine Learning},
-	series = {ICML '08},
-	year = {2008},
-	isbn = {978-1-60558-205-4},
-	location = {Helsinki, Finland},
-	pages = {160--167},
-	numpages = {8},
-	url = {http://doi.acm.org/10.1145/1390156.1390177},
-	doi = {10.1145/1390156.1390177},
-	acmid = {1390177},
-	publisher = {ACM},
-	address = {New York, NY, USA},
-}
-
-@article{Mikolov2013,
-	author    = {Tomas Mikolov and
-	Kai Chen and
-	Greg Corrado and
-	Jeffrey Dean},
-	title     = {Efficient Estimation of Word Representations in Vector Space},
-	journal   = {CoRR},
-	volume    = {abs/1301.3781},
-	year      = {2013},
-	url       = {http://arxiv.org/abs/1301.3781},
-	timestamp = {Thu, 07 May 2015 20:02:01 +0200},
-	biburl    = {http://dblp.uni-trier.de/rec/bib/journals/corr/abs-1301-3781},
-	bibsource = {dblp computer science bibliography, http://dblp.org}
-}
-
-@inproceedings{Pennington2014,
-	author    = {Jeffrey Pennington and
-	Richard Socher and
-	Christopher D. Manning},
-	editor    = {Alessandro Moschitti and
-	Bo Pang and
-	Walter Daelemans},
-	title     = {Glove: Global Vectors for Word Representation},
-	booktitle = {Proceedings of the 2014 Conference on Empirical Methods in Natural
-	Language Processing, {EMNLP} 2014, October 25-29, 2014, Doha, Qatar,
-	{A} meeting of SIGDAT, a Special Interest Group of the {ACL}},
-	pages     = {1532--1543},
-	publisher = {{ACL}},
-	year      = {2014},
-	url       = {http://aclweb.org/anthology/D/D14/D14-1162.pdf},
-	timestamp = {Sat, 15 Nov 2014 14:45:18 +0100},
-	biburl    = {http://dblp.uni-trier.de/rec/bib/conf/emnlp/PenningtonSM14},
-	bibsource = {dblp computer science bibliography, http://dblp.org}
-}
-
-@ARTICLE{Lai2016, 
-	author={S. Lai and K. Liu and S. He and J. Zhao}, 
-	journal={IEEE Intelligent Systems}, 
-	title={How to Generate a Good Word Embedding}, 
-	year={2016}, 
-	volume={31}, 
-	number={6}, 
-	pages={5-14}, 
-	keywords={learning (artificial intelligence);natural language processing;neural nets;distributed word representation;neural network;word embedding;Analytical models;Distributed processing;Embedded systems;Neural networks;Object recognition;Semantics;Training;distributed representation;intelligent systems;neural network;word embedding}, 
-	doi={10.1109/MIS.2016.45}, 
-	ISSN={1541-1672}, 
-	month={Nov},}
-
-@incollection{Mnih2013,
-	title = {Learning word embeddings efficiently with noise-contrastive estimation},
-	author = {Mnih, Andriy and Kavukcuoglu, Koray},
-	booktitle = {Advances in Neural Information Processing Systems 26},
-	editor = {C. J. C. Burges and L. Bottou and M. Welling and Z. Ghahramani and K. Q. Weinberger},
-	pages = {2265--2273},
-	year = {2013},
-	publisher = {Curran Associates, Inc.},
-	url = {http://papers.nips.cc/paper/5165-learning-word-embeddings-efficiently-with-noise-contrastive-estimation.pdf}
-}
-
-@article{Graves2005,
-	title = "Framewise phoneme classification with bidirectional {LSTM} and other neural network architectures ",
-	journal = "Neural Networks ",
-	volume = "18",
-	number = "5–6",
-	pages = "602 - 610",
-	year = "2005",
-	note = "{IJCNN} 2005 ",
-	issn = "0893-6080",
-	doi = "https://doi.org/10.1016/j.neunet.2005.06.042",
-	url = "http://www.sciencedirect.com/science/article/pii/S0893608005001206",
-	author = "Alex Graves and Jürgen Schmidhuber"
-}
-
-@article{Miller1995,
-	author = {Miller, George A.},
-	title = {WordNet: A Lexical Database for English},
-	journal = {Commun. ACM},
-	issue_date = {Nov. 1995},
-	volume = {38},
-	number = {11},
-	month = {11},
-	year = {1995},
-	issn = {0001-0782},
-	pages = {39--41},
-	numpages = {3},
-	url = {http://doi.acm.org/10.1145/219717.219748},
-	doi = {10.1145/219717.219748},
-	acmid = {219748},
-	publisher = {ACM},
-	address = {New York, NY, USA},
-}
-
-@Inbook{Pei2016,
-	author="Pei, Jiahuan
-	and Zhang, Cong
-	and Huang, Degen
-	and Ma, Jianjun",
-	editor="Lin, Chinyew
-	and Xue, Nianwen
-	and Zhao, Dongyan
-	and Huang, Xuanjing
-	and Feng, Yansong",
-	title="Combining Word Embedding and Semantic Lexicon for Chinese Word Similarity Computation",
-	bookTitle="Natural Language Understanding and Intelligent Applications: 5th CCF Conference on Natural Language Processing and Chinese Computing, NLPCC 2016, and 24th International Conference on Computer Processing of Oriental Languages, ICCPOL 2016, Kunming, China, December 2--6, 2016, Proceedings",
-	year="2016",
-	publisher="Springer International Publishing",
-	address="Cham",
-	pages="766--777",
-	isbn="978-3-319-50496-4",
-	doi="10.1007/978-3-319-50496-4_69",
-	url="http://dx.doi.org/10.1007/978-3-319-50496-4_69"
-}
-
-@Inbook{Ma2016,
-	author="Ma, Shutian
-	and Zhang, Xiaoyong
-	and Zhang, Chengzhi",
-	editor="Lin, Chinyew
-	and Xue, Nianwen
-	and Zhao, Dongyan
-	and Huang, Xuanjing
-	and Feng, Yansong",
-	title="NLPCC 2016 Shared Task Chinese Words Similarity Measure via Ensemble Learning Based on Multiple Resources",
-	bookTitle="Natural Language Understanding and Intelligent Applications: 5th CCF Conference on Natural Language Processing and Chinese Computing, NLPCC 2016, and 24th International Conference on Computer Processing of Oriental Languages, ICCPOL 2016, Kunming, China, December 2--6, 2016, Proceedings",
-	year="2016",
-	publisher="Springer International Publishing",
-	address="Cham",
-	pages="862--869",
-	isbn="978-3-319-50496-4",
-	doi="10.1007/978-3-319-50496-4_79",
-	url="http://dx.doi.org/10.1007/978-3-319-50496-4_79"
+@inproceedings{Wu2016,
+  title={Overview of the NLPCC-ICCPOL 2016 Shared Task: Chinese Word Similarity Measurement},
+  author={Wu, Yunfang and Li, Wei},
+  booktitle={International Conference on Computer Processing of Oriental Languages},
+  pages={828--839},
+  year={2016},
+  publisher={Springer International Publishing},
+  address={Cham}
 }
 
 @article{Zhang2017,
-	author = {张硕望 and 欧阳纯萍 and 阳小华 and 刘永彬 and 刘志明},
-	title = {融合《知网》和搜索引擎的词汇语义相似度计算},
-	publisher = {计算机应用},
-	year = {2017},
-	journal = {计算机应用},
-	volume = {37},
-	number = {4},
-	eid = {1056},
-	numpages = {4},
-	pages = {1056},
-	keywords = {语义相似度;知网;搜索引擎;权重;网络},
-	url = {http://www.joca.cn/CN/abstract/article_20422.shtml},
-	doi = {10.11772/j.issn.1001-9081.2017.04.1056},
-	language = {zh}
+  title={融合《知网》和搜索引擎的词汇语义相似度计算},
+  author={张硕望 and 欧阳纯萍 and 阳小华 and 刘永彬 and 刘志明},
+  journal={计算机应用},
+  volume={37},
+  number={4},
+  pages={1056--1060},
+  year={2017},
+  language={zh}
 }
 
-@Program{Sun2016,
+@article{Hochreiter1997,
+  title={Long short-term memory},
+  author={Hochreiter, Sepp and Schmidhuber, J{\"u}rgen},
+  journal={Neural computation},
+  volume={9},
+  number={8},
+  pages={1735--1780},
+  year={1997},
+  publisher={MIT Press}
+}
+
+@article{Zeiler2012,
+  title={ADADELTA: an adaptive learning rate method},
+  author={Zeiler, Matthew D},
+  journal={arXiv preprint arXiv:1212.5701},
+  year={2012}
+}
+
+@article{Duchi2011,
+  title={Adaptive subgradient methods for online learning and stochastic optimization},
+  author={Duchi, John and Hazan, Elad and Singer, Yoram},
+  journal={Journal of Machine Learning Research},
+  volume={12},
+  number={Jul},
+  pages={2121--2159},
+  year={2011}
+}
+
+@article{Bengio2003,
+  title={A neural probabilistic language model},
+  author={Bengio, Yoshua and Ducharme, R{\'e}jean and Vincent, Pascal and Jauvin, Christian},
+  journal={Journal of machine learning research},
+  volume={3},
+  number={Feb},
+  pages={1137--1155},
+  year={2003}
+}
+
+@inproceedings{Collobert2008,
+  title={A unified architecture for natural language processing: Deep neural networks with multitask learning},
+  author={Collobert, Ronan and Weston, Jason},
+  booktitle={Proceedings of the 25th international conference on Machine learning},
+  pages={160--167},
+  year={2008},
+  publisher = {ACM},
+  address = {New York, NY, USA}
+}
+
+@article{Mikolov2013,
+  title={Efficient estimation of word representations in vector space},
+  author={Mikolov, Tomas and Chen, Kai and Corrado, Greg and Dean, Jeffrey},
+  journal={arXiv preprint arXiv:1301.3781},
+  year={2013}
+}
+
+@article{Miller1995,
+  title={WordNet: a lexical database for English},
+  author={Miller, George A},
+  journal={Communications of the ACM},
+  volume={38},
+  number={11},
+  pages={39--41},
+  year={1995},
+  publisher={ACM}
+}
+
+@inproceedings{Mnih2007,
+  title={Three new graphical models for statistical language modelling},
+  author={Mnih, Andriy and Hinton, Geoffrey},
+  booktitle={Proceedings of the 24th international conference on Machine learning},
+  pages={641--648},
+  year={2007},
+  publisher = {ACM},
+  address = {New York, NY, USA}
+}
+
+@article{Ruder2016,
+  title={An overview of gradient descent optimization algorithms},
+  author={Ruder, Sebastian},
+  journal={arXiv preprint arXiv:1609.04747},
+  year={2016}
+}
+
+@article{Kingma2014,
+  title={Adam: A method for stochastic optimization},
+  author={Kingma, Diederik and Ba, Jimmy},
+  journal={arXiv preprint arXiv:1412.6980},
+  year={2014}
+}
+
+@article{Graves2005,
+  title={Framewise phoneme classification with bidirectional LSTM and other neural network architectures},
+  author={Graves, Alex and Schmidhuber, J{\"u}rgen},
+  journal={Neural Networks},
+  volume={18},
+  number={5},
+  pages={602--610},
+  year={2005},
+  publisher={Elsevier}
+}
+
+@inproceedings{Sak2014,
+  title={Long short-term memory recurrent neural network architectures for large scale acoustic modeling},
+  author={Sak, Ha{\c{s}}im and Senior, Andrew and Beaufays, Fran{\c{c}}oise},
+  booktitle={Fifteenth Annual Conference of the International Speech Communication Association},
+  year={2014}
+}
+
+@article{Gers2000,
+	author = { Felix A. Gers  and  Jürgen Schmidhuber  and  Fred Cummins },
+	title = {Learning to Forget: Continual Prediction with LSTM},
+	journal = {Neural Computation},
+	volume = {12},
+	number = {10},
+	pages = {2451-2471},
+	year = {2000}
+}
+
+@article{Lai2016,
+  title={How to generate a good word embedding},
+  author={Lai, Siwei and Liu, Kang and He, Shizhu and Zhao, Jun},
+  journal={IEEE Intelligent Systems},
+  volume={31},
+  number={6},
+  pages={5--14},
+  year={2016},
+  publisher={IEEE}
+}
+
+@inproceedings{Mnih2013,
+  title={Learning word embeddings efficiently with noise-contrastive estimation},
+  author={Mnih, Andriy and Kavukcuoglu, Koray},
+  booktitle={Advances in neural information processing systems},
+  pages={2265--2273},
+  year={2013},
+  publisher = {Curran Associates Inc.},
+  address = {USA}
+}
+
+@inproceedings{Pennington2014,
+  title={Glove: Global Vectors for Word Representation.},
+  author={Pennington, Jeffrey and Socher, Richard and Manning, Christopher D},
+  booktitle={EMNLP},
+  volume={14},
+  pages={1532--1543},
+  year={2014},
+  publisher = {ACL}
+}
+
+@inproceedings{Pei2016,
+  title={Combining word embedding and semantic lexicon for Chinese word similarity computation},
+  author={Pei, Jiahuan and Zhang, Cong and Huang, Degen and Ma, Jianjun},
+  booktitle={International Conference on Computer Processing of Oriental Languages},
+  pages={766--777},
+  year={2016},
+  publisher={Springer International Publishing},
+  address={Cham}
+}
+
+@inproceedings{Ma2016,
+  title={NLPCC 2016 Shared Task Chinese Words Similarity Measure via Ensemble Learning Based on Multiple Resources},
+  author={Ma, Shutian and Zhang, Xiaoyong and Zhang, Chengzhi},
+  booktitle={International Conference on Computer Processing of Oriental Languages},
+  pages={862--869},
+  year={2016},
+  publisher={Springer International Publishing},
+  address={Cham}
+}
+
+@program{Sun2016,
 	author    = {孙茂松 and 李景阳 and 郭志芃 and 赵宇 and 郑亚斌 and 司宪策 and 刘知远},
 	title     = {THUCTC：一个高效的中文文本分类工具包},
 	year      = {2016},
 	language  = {zh},
-	url       = {http://thuctc.thunlp.org/},
 }

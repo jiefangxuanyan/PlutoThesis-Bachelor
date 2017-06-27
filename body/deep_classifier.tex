@@ -196,8 +196,8 @@ L(y', y) = -\bigl(y \log(y') + (1 - y) \log(1 - y')\bigr)
 为了使学习的结果更加稳定，上述步骤得到的结果最终会被乱序处理。由于数据量过大，乱序处理无法在内存中进行。因此本课题使用了外存储器辅助完成乱序，如算法 \ref{a:shuffling} 所述。
 
 \begin{algorithm}[h]
-	\KwData{待乱序序列 $X$}
-	\KwResult{乱序后序列 $Y$}
+	\KwIn{待乱序序列 $X$}
+	\KwOut{乱序后序列 $Y$}
 	\For{$i$ in $[1, n_\text{split}]$}{
 		以写入模式打开临时文件 $F_i$\;
 	}
